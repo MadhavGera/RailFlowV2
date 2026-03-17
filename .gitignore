@@ -1,0 +1,10 @@
+# Ignore heavy dependency folders anywhere in the project
+node_modules/
+
+# Ignore secret environment variables anywhere in the project
+.env
+.env.local
+
+# Ignore build outputs
+dist/
+build/

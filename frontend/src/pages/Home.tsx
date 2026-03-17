@@ -1,0 +1,65 @@
+import React from 'react';
+import Navbar from '../components/Navbar';
+import SearchWidget from '../components/SearchWidget';
+import { ShieldCheck, Zap, Globe } from 'lucide-react';
+
+const Home: React.FC = () => {
+  return (
+    <div className="min-h-screen bg-[#0f172a]">
+      <Navbar />
+      
+      {/* Hero Section */}
+      <div className="relative h-[500px] w-full overflow-hidden">
+        {/* Abstract Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-900 via-[#0f172a] to-[#0f172a] z-0"></div>
+        <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1474487548417-781cb714c2f3?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a] to-transparent"></div>
+
+        <div className="relative z-10 container mx-auto px-4 h-full flex flex-col items-center justify-center text-center -mt-10">
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight">
+            Travel <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-indigo-300">Smarter</span>
+          </h1>
+          <p className="text-lg md:text-xl text-slate-300 max-w-2xl">
+            Experience the next generation of railway booking with real-time seat locking and smart boarding recommendations.
+          </p>
+        </div>
+      </div>
+
+      {/* Search Widget (Overlaps Hero) */}
+      <SearchWidget />
+
+      {/* Features */}
+      <div className="container mx-auto px-4 py-24">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <FeatureCard 
+            icon={<Zap className="w-8 h-8 text-warning-400" />}
+            title="Real-Time Locking"
+            desc="No more double bookings. Seats are locked instantly across all users the moment you select them."
+          />
+          <FeatureCard 
+            icon={<Globe className="w-8 h-8 text-primary-400" />}
+            title="Smart Recommendations"
+            desc="Direct train full? Our AI suggests alternative boarding stations to get you a confirmed seat."
+          />
+          <FeatureCard 
+            icon={<ShieldCheck className="w-8 h-8 text-success-500" />}
+            title="Secure Transaction"
+            desc="Bank-grade security with atomic database transactions ensuring your ticket is 100% confirmed."
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const FeatureCard: React.FC<{ icon: React.ReactNode; title: string; desc: string }> = ({ icon, title, desc }) => (
+  <div className="p-6 rounded-2xl bg-slate-800/30 border border-slate-700/50 hover:bg-slate-800/50 transition-colors">
+    <div className="mb-4 bg-slate-900/50 w-16 h-16 rounded-xl flex items-center justify-center border border-slate-700">
+      {icon}
+    </div>
+    <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
+    <p className="text-slate-400 leading-relaxed">{desc}</p>
+  </div>
+);
+
+export default Home;
