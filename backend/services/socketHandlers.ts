@@ -16,7 +16,7 @@ export const registerSocketHandlers = (io: Server) => {
 
       try {
         // NX = only set if not exists, EX = TTL in seconds
-        const result = await redis.set(lockKey, userId, 'NX', 'EX', LOCK_TTL);
+        const result = await redis.set(lockKey, userId, 'EX', LOCK_TTL, 'NX');
 
         if (result === 'OK') {
           // Lock acquired — tell this user and broadcast to all others
