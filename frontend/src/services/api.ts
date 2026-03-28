@@ -1,4 +1,5 @@
-const BASE = '/api';
+const API_URL = import.meta.env.VITE_API_URL || '';
+const BASE = `${API_URL}/api`;
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
   const token = localStorage.getItem('auth_token');
@@ -50,7 +51,7 @@ export const api = {
     getById: (id: string) =>
       request<{ train: import('../types').Train }>(`/trains/${id}`),
   },
-  
+
   payments: {
     createIntent: (amount: number) =>
       request<{ clientSecret: string }>('/payments/create-intent', { method: 'POST', body: JSON.stringify({ amount }) }),
