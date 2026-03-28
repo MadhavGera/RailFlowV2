@@ -20,10 +20,12 @@ const SearchResults: React.FC = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (!from || !to || !date) {
-    setLoading(false); // Instantly stop the spinner
-    return; // Don't call the API
-  }
+    // 👇 Notice we are using fromId and toId here to match your variables!
+    if (!fromId || !toId || !date) {
+      setLoading(false); // Instantly stop the spinner
+      return; // Don't call the API
+    }
+
     const fetchTrains = async () => {
       setLoading(true);
       setError('');
@@ -40,7 +42,8 @@ const SearchResults: React.FC = () => {
         setLoading(false);
       }
     };
-    if (fromId && toId && date) fetchTrains();
+
+    fetchTrains();
   }, [fromId, toId, date]);
 
 
