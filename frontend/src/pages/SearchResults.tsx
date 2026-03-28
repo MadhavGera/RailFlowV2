@@ -20,6 +20,10 @@ const SearchResults: React.FC = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
+    if (!from || !to || !date) {
+    setLoading(false); // Instantly stop the spinner
+    return; // Don't call the API
+  }
     const fetchTrains = async () => {
       setLoading(true);
       setError('');

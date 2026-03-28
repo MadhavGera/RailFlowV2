@@ -13,6 +13,8 @@ const Navbar: React.FC = () => {
     logout();
     toast.info("Signed out successfully");
   };
+  const today = new Date().toISOString().split('T')[0];
+
 
   return (
     <>
@@ -27,22 +29,26 @@ const Navbar: React.FC = () => {
             </span>
           </Link>
           <div className="flex items-center gap-6">
-            <Link to="/trains" className="text-slate-300 hover:text-white transition-colors text-sm font-medium hover:drop-shadow-md">Find Trains</Link>
-            
+            <Link
+              to={`/search?from=NDLS&to=MMCT&date=${today}`}
+              className="text-slate-300 hover:text-white transition-colors font-medium">
+              Find Trains
+            </Link>
+
             {user ? (
               <div className="flex items-center gap-4">
                 <Link to="/bookings" className="text-slate-300 hover:text-white transition-colors text-sm font-medium hover:drop-shadow-md">My Bookings</Link>
                 <div className="flex items-center gap-2 text-white">
-                   {user.picture ? (
-                     <img src={user.picture} alt={user.name} className="w-8 h-8 rounded-full border border-white/10 shadow-lg" referrerPolicy="no-referrer" />
-                   ) : (
-                     <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-500 to-indigo-600 flex items-center justify-center text-xs font-bold shadow-lg shadow-primary-900/20 cursor-default border border-white/10">
-                        {user.name.charAt(0).toUpperCase()}
-                     </div>
-                   )}
-                   <span className="text-sm font-medium hidden sm:block text-slate-200">{user.name}</span>
+                  {user.picture ? (
+                    <img src={user.picture} alt={user.name} className="w-8 h-8 rounded-full border border-white/10 shadow-lg" referrerPolicy="no-referrer" />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-500 to-indigo-600 flex items-center justify-center text-xs font-bold shadow-lg shadow-primary-900/20 cursor-default border border-white/10">
+                      {user.name.charAt(0).toUpperCase()}
+                    </div>
+                  )}
+                  <span className="text-sm font-medium hidden sm:block text-slate-200">{user.name}</span>
                 </div>
-                <button 
+                <button
                   onClick={handleLogout}
                   className="p-2 text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
                   title="Logout"
@@ -51,7 +57,7 @@ const Navbar: React.FC = () => {
                 </button>
               </div>
             ) : (
-              <button 
+              <button
                 onClick={() => setIsLoginOpen(true)}
                 className="flex items-center gap-2 text-slate-300 hover:text-white transition-colors group"
               >
@@ -64,10 +70,10 @@ const Navbar: React.FC = () => {
           </div>
         </div>
       </nav>
-      
-      <LoginModal 
-        isOpen={isLoginOpen} 
-        onClose={() => setIsLoginOpen(false)} 
+
+      <LoginModal
+        isOpen={isLoginOpen}
+        onClose={() => setIsLoginOpen(false)}
       />
     </>
   );
