@@ -30,7 +30,7 @@ const Navbar: React.FC = () => {
           </Link>
           <div className="flex items-center gap-6">
             <Link
-              to={`/search?from=DEL&to=BPL&date=${today}`}
+              to={`/trains?from=DEL&to=BPL&date=${today}`}
               className="text-slate-300 hover:text-white transition-colors font-medium">
               Find Trains
             </Link>
