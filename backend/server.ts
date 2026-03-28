@@ -47,6 +47,9 @@ async function startServer() {
 
   // Health check
   app.get('/api/health', (_, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }));
+  app.get('/health', (req, res) => {
+    res.status(200).send('Backend is awake!');
+  });
 
   httpServer.listen(PORT, '0.0.0.0', () => {
     console.log(`\n🚂 RailFlow Backend running on http://localhost:${PORT}`);
