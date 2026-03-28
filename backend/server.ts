@@ -4,7 +4,7 @@ import { Server } from 'socket.io';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import paymentRoutes from './routes/payments'
+import paymentRoutes from './routes/payments.js'
 
 dotenv.config();
 
