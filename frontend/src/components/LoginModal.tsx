@@ -22,17 +22,20 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
-      // Validate origin is from AI Studio preview or localhost
       const origin = event.origin;
-      if (!origin.endsWith('.run.app') && !origin.includes('localhost')) {
+      
+      // Allow messages from Localhost (dev) and Render (production backend)
+      if (!origin.includes('localhost') && !origin.includes('onrender.com')) {
         return;
       }
+      
       if (event.data?.type === 'OAUTH_AUTH_SUCCESS') {
         refreshUser();
         toast.success("Successfully connected with Google!");
         onClose();
       }
     };
+    
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
   }, [refreshUser, onClose]);
