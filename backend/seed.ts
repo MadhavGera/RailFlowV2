@@ -22,10 +22,11 @@ const STATIONS = [
 ];
 
 const TRAIN_DEFS = [
+  // --- FORWARD ROUTES ---
   {
     trainNumber: '12301',
     trainName:   'Rajdhani Express',
-    stations:    STATIONS, // Runs the full route
+    stations:    STATIONS, // Delhi -> Mumbai
     coaches:     [{ coachName: 'A1', totalSeats: 20 }, { coachName: 'A2', totalSeats: 20 }, { coachName: 'B1', totalSeats: 20 }],
     departureTime: '16:55',
     duration:    '8h 20m',
@@ -34,9 +35,29 @@ const TRAIN_DEFS = [
   {
     trainNumber: '12418',
     trainName:   'Jhansi-Bhopal Express',
-    stations:    STATIONS.slice(2, 6), // Runs from Gwalior to Indore (includes JHS to BPL)
+    stations:    STATIONS.slice(2, 6), // Gwalior -> Indore
     coaches:     [{ coachName: 'A1', totalSeats: 20 }, { coachName: 'A2', totalSeats: 20 }],
     departureTime: '21:30',
+    duration:    '4h 45m',
+    basePrice:   900,
+  },
+
+  // --- REVERSE ROUTES ---
+  {
+    trainNumber: '12302',
+    trainName:   'Return Rajdhani Express',
+    stations:    [...STATIONS].reverse().map((s, i) => ({ ...s, index: i })), // Mumbai -> Delhi
+    coaches:     [{ coachName: 'A1', totalSeats: 20 }, { coachName: 'A2', totalSeats: 20 }, { coachName: 'B1', totalSeats: 20 }],
+    departureTime: '08:00',
+    duration:    '8h 20m',
+    basePrice:   1500,
+  },
+  {
+    trainNumber: '12419',
+    trainName:   'Bhopal-Jhansi Express',
+    stations:    [...STATIONS.slice(2, 6)].reverse().map((s, i) => ({ ...s, index: i })), // Indore -> Gwalior
+    coaches:     [{ coachName: 'A1', totalSeats: 20 }, { coachName: 'A2', totalSeats: 20 }],
+    departureTime: '06:30',
     duration:    '4h 45m',
     basePrice:   900,
   }
