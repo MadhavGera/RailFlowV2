@@ -5,6 +5,7 @@ import Booking from '../models/Booking.js';
 import Seat from '../models/Seat.js';
 import redis from '../config/redis.js';
 import { requireAuth, AuthRequest } from '../middleware/auth.js';
+import { sendBookingConfirmation } from '../utils/sendEmail.js'; // Ensure the .js extension is there if you use ES modules
 
 const router = Router();
 
@@ -12,7 +13,7 @@ const router = Router();
 router.get('/', requireAuth, async (req: AuthRequest, res: Response) => {
   try {
     const bookings = await Booking.find({ userId: req.user!.email }).sort({ timestamp: -1 });
-    
+
     // 👇 Map MongoDB's _id to the frontend's expected id property
     const formattedBookings = bookings.map((b) => ({
       ...b.toObject(),
@@ -100,6 +101,23 @@ router.post('/confirm', requireAuth, async (req: AuthRequest, res: Response) => 
       await redis.del(lockKey);
     }
 
+    // 7. Send Confirmation Email (Do not use await here so the frontend doesn't hang)
+    if (req.user && req.user.email) {
+      sendBookingConfirmation(
+        req.user.email,
+        req.user.name || 'Traveler',
+        {
+          trainName,
+          trainNumber,
+          fromStationId,
+          toStationId,
+          journeyDate,
+          seatIds: seatNumbers // Using seatNumbers so the email shows "A1-1" instead of a long MongoDB ID string
+        }
+      ).catch(err => console.error("Failed to send email:", err));
+    }
+
+    // 8. Send Response
     res.status(201).json({
       booking: {
         id: booking._id,
