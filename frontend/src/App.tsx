@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import SearchResults from './pages/SearchResults';
 import BookingPage from './pages/BookingPage';
 import BookingsPage from './pages/BookingsPage';
+import AdminDashboard from './pages/AdminDashboard';
 import { SocketProvider } from './context/SocketContext';
 import { AuthProvider } from './context/AuthContext';
 import { ToastContainer } from 'react-toastify';
@@ -25,6 +26,7 @@ const App: React.FC = () => {
             <Route path="/trains" element={<SearchResults />} />
             <Route path="/booking/:trainId" element={<BookingPage />} />
             <Route path="/bookings" element={<BookingsPage />} />
+            <Route path="/admin" element={<AdminDashboard />} />
           </Routes>
         </AuthProvider>
       </SocketProvider>

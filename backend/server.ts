@@ -14,6 +14,7 @@ import authRoutes from './routes/auth.js';
 import trainRoutes from './routes/trains.js';
 import seatRoutes from './routes/seats.js';
 import bookingRoutes from './routes/bookings.js';
+import adminRoutes from './routes/admin.js';
 
 async function startServer() {
   await connectDB();
@@ -43,7 +44,8 @@ async function startServer() {
   app.use('/api/trains', trainRoutes);
   app.use('/api/seats', seatRoutes);
   app.use('/api/bookings', bookingRoutes);
-  app.use('/api/payments', paymentRoutes)
+  app.use('/api/payments', paymentRoutes);
+  app.use('/api/admin', adminRoutes);
 
   // Health check
   app.get('/api/health', (_, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }));

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Train, User, LogOut } from 'lucide-react';
+import { Train, User, LogOut, BarChart3 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import LoginModal from './LoginModal';
@@ -34,6 +34,15 @@ const Navbar: React.FC = () => {
               className="text-slate-300 hover:text-white transition-colors font-medium">
               Find Trains
             </Link>
+            
+            {user?.role === 'admin' && (
+              <Link
+                to="/admin"
+                className="text-slate-300 hover:text-white transition-colors font-medium flex items-center gap-1">
+                <BarChart3 className="w-4 h-4" />
+                Admin
+              </Link>
+            )}
 
             {user ? (
               <div className="flex items-center gap-4">

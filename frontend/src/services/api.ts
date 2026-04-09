@@ -85,6 +85,15 @@ export const api = {
     cancel: (bookingId: string) =>
       request('/bookings/cancel', { method: 'POST', body: JSON.stringify({ bookingId }) }),
   },
+
+  admin: {
+    getDashboard: () =>
+      request<{
+        revenueAnalytics: { _id: string; totalRevenue: number; totalTicketsSold: number; trainName: string; trainNumber: string }[];
+        busiestRoutes: { fromStation: string; toStation: string; count: number }[];
+        frequentFlyers: { email: string; name: string; trips: number; totalSpent: number }[];
+      }>('/admin/dashboard'),
+  },
 };
 
 export default api;

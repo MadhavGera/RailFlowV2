@@ -9,10 +9,10 @@ const router = Router();
 const JWT_EXPIRES = '7d';
 
 // 👇 FIX 1: The secret is now inside the function to avoid the dotenv hoisting bug!
-const makeToken = (user: { _id: any; email: string; name: string }) => {
+const makeToken = (user: { _id: any; email: string; name: string; role: string }) => {
   const secret = process.env.JWT_SECRET || 'railflow_secret';
   return jwt.sign(
-    { id: user._id.toString(), email: user.email, name: user.name }, 
+    { id: user._id.toString(), email: user.email, name: user.name, role: user.role }, 
     secret, 
     { expiresIn: JWT_EXPIRES }
   );
@@ -42,7 +42,7 @@ router.post('/register', async (req: Request, res: Response) => {
     setTokenCookie(res, token); 
 
     // 👇 FIX 2: We are sending the token back in the JSON body so LocalStorage can catch it
-    res.status(201).json({ user: { name: user.name, email: user.email, picture: user.picture }, token });
+    res.status(201).json({ user: { name: user.name, email: user.email, picture: user.picture, role: user.role }, token });
   } catch (err: any) {
     res.status(500).json({ error: 'Registration failed' });
   }
@@ -64,7 +64,7 @@ router.post('/login', async (req: Request, res: Response) => {
     setTokenCookie(res, token); 
 
     // 👇 FIX 2: We are sending the token back in the JSON body so LocalStorage can catch it
-    res.json({ user: { name: user.name, email: user.email, picture: user.picture }, token });
+    res.json({ user: { name: user.name, email: user.email, picture: user.picture, role: user.role }, token });
   } catch (err: any) {
     res.status(500).json({ error: 'Login failed' });
   }
@@ -143,7 +143,7 @@ router.get('/me', requireAuth, async (req: AuthRequest, res: Response) => {
   try {
     const user = await User.findById(req.user!.id).select('-password');
     if (!user) return res.status(404).json({ error: 'User not found' });
-    res.json({ user: { name: user.name, email: user.email, picture: user.picture } });
+    res.json({ user: { name: user.name, email: user.email, picture: user.picture, role: user.role } });
   } catch {
     res.status(500).json({ error: 'Failed to fetch user' });
   }

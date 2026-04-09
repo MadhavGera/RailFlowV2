@@ -6,6 +6,7 @@ export interface IUser extends Document {
   password?: string; // Hashed; absent for Google OAuth users
   picture?: string;
   provider: 'local' | 'google';
+  role: 'user' | 'admin';
 }
 
 const UserSchema = new Schema<IUser>(
@@ -15,6 +16,7 @@ const UserSchema = new Schema<IUser>(
     password: { type: String },
     picture: { type: String },
     provider: { type: String, enum: ['local', 'google'], default: 'local' },
+    role: { type: String, enum: ['user', 'admin'], default: 'user' },
   },
   { timestamps: true }
 );
